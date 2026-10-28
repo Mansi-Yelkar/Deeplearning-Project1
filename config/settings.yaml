@@ -1,0 +1,39 @@
+app:
+  title: "SafeSight AI"
+  tagline: "Deep Learning-Based Workplace Safety Monitoring System"
+  version: "1.0.0"
+  log_level: "INFO"
+
+storage:
+  database_path: "incidents.db"
+  evidence_dir: "outputs/evidence"
+  processed_video_dir: "outputs/videos"
+
+model:
+  default_checkpoint: "yolov8n.pt"
+  custom_checkpoint: "models/safesight_ppe.pt"
+  confidence_threshold: 0.35
+  iou_threshold: 0.45
+  img_size: 640
+  device: "cpu" # 'cuda' if GPU available, else 'cpu'
+
+# Class mapping support: supports both generic COCO (person) & PPE-specific datasets
+# Common PPE labels: [helmet, vest, person, head, no-helmet, no-vest]
+safety_rules:
+  require_helmet: true
+  require_vest: true
+  helmet_confidence_threshold: 0.35
+  vest_confidence_threshold: 0.35
+  person_confidence_threshold: 0.40
+  head_overlap_iou_threshold: 0.20
+  torso_overlap_iou_threshold: 0.20
+  uncertain_threshold: 0.25
+
+video:
+  frame_sample_rate: 5 # Process every Nth frame
+  max_upload_size_mb: 200
+  supported_formats: ["mp4", "avi", "mov", "mkv"]
+
+images:
+  supported_formats: ["jpg", "jpeg", "png"]
+  max_upload_size_mb: 25
